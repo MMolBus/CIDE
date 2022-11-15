@@ -1,2 +1,2 @@
 # CIDE
- Funtions to work in CIDE experiments
+ Functions to work in CIDE experiments
