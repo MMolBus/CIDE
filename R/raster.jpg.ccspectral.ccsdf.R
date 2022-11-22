@@ -8,6 +8,8 @@ raster.jpg.ccspectral <- function(img.photo,
                                   manual.mask.test, mask.photo){
   vis_jpg  <-
     jpeg::readJPEG(paste("./JPG/", img.photo, sep = ""))
+  # vis_jpg  <-
+  #   jpeg::readJPEG(paste0(getwd(),"/", img.photo))
 
   jpg.1 <-         raster(vis_jpg[, , 1])
   jpg.2 <-         raster(vis_jpg[, , 2])
