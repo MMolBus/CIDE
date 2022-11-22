@@ -162,8 +162,9 @@ ccspectral.df <- function(tif.path,
                 "threshold.method")
           }else{
             df_names <-
-              c("sample", "vis.file", "nir.file",
-                unlist(
+              # c("sample", "vis.file", "nir.file",
+              c("sample", "img.file",
+              unlist(
                   lapply(1:length(index.), function(i)
                     c(apply(expand.grid(surface.,
                                         index.[i]), 1, paste, collapse=".")
@@ -178,7 +179,8 @@ ccspectral.df <- function(tif.path,
           }else{
             if(length(index.)>1){
               df_names <-
-                c("sample", "vis.file", "nir.file",
+                # c("sample", "vis.file", "nir.file",
+                c("sample", "img.file",
                   do.call(c,
                           lapply(1:length(index.), function(i)
                             c(apply(expand.grid(
@@ -192,7 +194,8 @@ ccspectral.df <- function(tif.path,
                   "threshold.method")
               }else{
                 df_names <-
-                  c("sample", "vis.file", "nir.file",
+                  # c("sample", "vis.file", "nir.file",
+                  c("sample", "img.file",
                     unlist(lapply(1:length(index.), function(i)
                       c(apply(expand.grid(
                         surface.,
@@ -209,7 +212,8 @@ ccspectral.df <- function(tif.path,
               if(manual.mask.test==F){
                 if(length(index.)>1){
                   df_names <-
-                    c("sample", "vis.file", "nir.file",
+                    # c("sample", "vis.file", "nir.file",
+                    c("sample", "img.file",
                       do.call(c,
                               lapply(1:length(index.), function(i)
                                 c(apply(expand.grid(
@@ -223,7 +227,8 @@ ccspectral.df <- function(tif.path,
                       "threshold.method")
                   }else{
                     df_names <-
-                      c("sample", "vis.file", "nir.file",
+                      # c("sample", "vis.file", "nir.file",
+                        c("sample", "img.file",
                         unlist(lapply(1:length(index.), function(i)
                           c(apply(expand.grid(
                             surface.,
@@ -238,7 +243,8 @@ ccspectral.df <- function(tif.path,
                 }else{
                   if(length(index.)>1){
                     df_names <-
-                      c("sample", "vis.file", "nir.file",
+                      # c("sample", "vis.file", "nir.file",
+                      c("sample", "img.file",
                         do.call(c,
                                 lapply(1:length(index.), function(i)
                                   c(apply(expand.grid(
@@ -252,7 +258,8 @@ ccspectral.df <- function(tif.path,
                         "threshold.method")
                     }else{
                       df_names <-
-                        c("sample", "vis.file", "nir.file",
+                        # c("sample", "vis.file", "nir.file",
+                        c("sample", "img.file",
                           unlist(lapply(1:length(index.), function(i)
                             c(apply(expand.grid(
                               surface.,
@@ -270,7 +277,8 @@ ccspectral.df <- function(tif.path,
           if(calculate.thresh==T){#if you want to calculate autothresholds
             if(manual.mask.test==F){
                 df_names <-
-                  c("sample", "vis.file", "nir.file",
+                  # c("sample", "vis.file", "nir.file",
+                  c("sample", "img.file",
                     unlist(
                       unlist(
                                     lapply(1:length(index.), function(i)
@@ -291,7 +299,8 @@ ccspectral.df <- function(tif.path,
 
               }else{
                 df_names <-
-                  c("sample", "vis.file", "nir.file",
+                  # c("sample", "vis.file", "nir.file",
+                  c("sample", "img.file",
                     unlist(
                       unlist(
                                     lapply(1:length(index.), function(i)
@@ -312,7 +321,8 @@ ccspectral.df <- function(tif.path,
             }else{#if you don't want to calculate autothresholds, use a threshold vector value,
               if(manual.mask.test==F){
                 df_names <-
-                  c("sample", "vis.file", "nir.file",
+                  # c("sample", "vis.file", "nir.file",
+                  c("sample", "img.file",
                    unlist(
                             unlist(
                                     lapply(1:length(index.), function(i)
@@ -332,7 +342,8 @@ ccspectral.df <- function(tif.path,
                     "threshold.method")
                 }else{
                   df_names <-
-                    c("sample", "vis.file", "nir.file", "real.moss.cover",
+                    # c("sample", "vis.file", "nir.file", "real.moss.cover",
+                    c("sample", "img.file", "real.moss.cover",
                       unlist(
                         unlist(
                                       lapply(1:length(index.), function(i)
@@ -459,3 +470,4 @@ ccspectral.df <- function(tif.path,
   })
   message("Processed files may be found at: ", paste0(tif.path, out_dir))
 }
+
