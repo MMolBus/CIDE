@@ -148,7 +148,8 @@ ccspectral.df <- function(tif.path,
         if(manual.mask.test==F){
           if(length(index.)>1){
             df_names <-
-              c("sample", "vis.file", "nir.file",
+              # c("sample", "vis.file", "nir.file",
+              c("sample", "img.file",
                 do.call(c,
                         lapply(1:length(index.), function(i)
                           c(apply(expand.grid(surface.,
@@ -439,8 +440,8 @@ ccspectral.df <- function(tif.path,
       pair[1],
       pair[1],
       obs.areas = obs.areas,
-      vis.files = all_named[,1],
-      nir.files = all_named[,1],
+      img.files = all_named[,1],
+      # nir.files = all_named[,1],
       chart=chart,
       mask.files = mask_files,
       manual.mask.test = manual.mask.test,
