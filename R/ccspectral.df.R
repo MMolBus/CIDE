@@ -427,9 +427,9 @@ ccspectral.df <- function(tif.path,
       if (length(sample_names) != total_samples) {
         stop("File of sample names contains less/more names than samples")
       }
-      all_named$moss <- sample_names
+      all_named$sample <- sample_names
     } else{
-      all_named$moss <- c(names = paste0("obs_", 1:(total_samples)))
+      all_named$sample <- c(names = paste0("obs_", 1:(total_samples)))
     }
     print(all_named)
 
@@ -439,9 +439,12 @@ ccspectral.df <- function(tif.path,
     # source("./ccspectral/calcs.autothreshold.R")
 
   # Subsection 3: make calculations  ----------------------------------------
-    all <- data.frame(Var1 = 1:length(all_named[,1]), Var2 = 1:length(obs.areas))
 
-    all <- dplyr::arrange(all, Var1)
+    all <-
+      data.frame(Var1 = 1:length(all_named[,1]), Var2 = 1:length(obs.areas)) %>%
+      dplyr::arrange(Var1)
+
+
     print(all)
 
     start_time <- Sys.time()
