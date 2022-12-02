@@ -2,6 +2,7 @@
 # vis.photo <- vis_photo
 # nir.photo <- nir_photo
 # mask.photo <- mask_photo
+# img.photo <-  img_photo
 
 raster.jpg.ccspectral <- function(img.photo,
                                   # nir.photo,
@@ -41,7 +42,7 @@ raster.jpg.ccspectral <- function(img.photo,
       # stack(vis_red, vis_green, vis_blue, nir_blue)
           stack(jpg.1, jpg.2, jpg.3)
     names(all_bands) <-
-      c("vis.red", "vis.blue", "nir.blue")
+      c("vis.orange", "vis.cyan", "nir.blue")
   }
   return(all_bands)
 }
