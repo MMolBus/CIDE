@@ -67,16 +67,19 @@ calcs <-
     # Read and create raster from tiff =====================================
 
     if (manual.mask.test == T) {
-      all_bands <-  raster.jpg.ccspectral(
-        img.photo = img_photo,
-        # nir.photo = nir_photo,
-        manual.mask.test = manual.mask.test,
-        mask.photo = mask_photo
-      )
+      all_bands <-
+        raster.jpg.ccspectral(
+          img.photo = img_photo,
+          # nir.photo = nir_photo,
+          manual.mask.test = manual.mask.test,
+          mask.photo = mask_photo
+          )
     } else{
-      all_bands <-  raster.jpg.ccspectral(img.photo = img_photo,
-                                          # nir.photo = nir_photo,
-                                          manual.mask.test = manual.mask.test)
+      all_bands <-
+        raster.jpg.ccspectral(
+          img.photo = img_photo,
+          # nir.photo = nir_photo,
+          manual.mask.test = manual.mask.test)
     }
 
     # Calibrate color with color checker
