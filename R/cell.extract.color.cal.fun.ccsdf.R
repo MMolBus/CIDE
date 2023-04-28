@@ -105,8 +105,8 @@ cell.extract.color.cal.fun <-
     raster_band <-
       brick(red_band, blue_band)
   }
-  train_df <-
-    data.frame()
+  # train_df <-
+  #   data.frame()
   # Using RGB + RN Mapir
   # chart_vals <-
   #   data.frame(red.chart =   c(0.17, 0.63, 0.15, 0.11, 0.31, 0.20,
@@ -178,18 +178,38 @@ cell.extract.color.cal.fun <-
   #   train_df <- rbind(train_df, df_samp)
   # }
 # Mapir chart we only use three positions c(19,22,24) of xrite chart
+  # for (i in c(1:24)) {
+  #   poly <- chart[i]
+  #   options(warn = -1)
+  #   df_samp <- data.frame(chart_vals[i, ], extract(all.bands,
+  #                                                  poly))
+  #   options(warn = 0)
+  #   if (nrow(df_samp) >= 50) {
+  #     df_samp <- df_samp[sample(x = 1:nrow(df_samp), size = 50,
+  #                               replace = F), ]
+  #   }
+  #   train_df <- rbind(train_df, df_samp)
+  # }
+  rm(train_df, df_samp)
+  train_df <- data.frame()
   for (i in c(1:24)) {
     poly <- chart[i]
     options(warn = -1)
     df_samp <- data.frame(chart_vals[i, ], extract(all.bands,
                                                    poly))
-    options(warn = 0)
-    if (nrow(df_samp) >= 50) {
-      df_samp <- df_samp[sample(x = 1:nrow(df_samp), size = 50,
-                                replace = F), ]
-    }
+    cnames <- colnames(df_samp)
+    # options(warn = 0)
+    # if (nrow(df_samp) >= 50) {
+    #   df_samp <- df_samp[sample(x = 1:nrow(df_samp), size = 50,
+    #                             replace = F), ]
+    # }
+    df_samp <-
+    apply(df_samp,2,mean)
     train_df <- rbind(train_df, df_samp)
+    colnames(train_df) <- cnames
+
   }
+
   # filter NA
   train_df <- train_df[!is.na(train_df$orange.chart),]
 

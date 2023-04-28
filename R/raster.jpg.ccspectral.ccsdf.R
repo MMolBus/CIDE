@@ -15,8 +15,9 @@ raster.jpg.ccspectral <- function(img.photo,
   jpg.1 <-         raster(vis_jpg[, , 1])
   jpg.2 <-         raster(vis_jpg[, , 2])
   jpg.3 <-         raster(vis_jpg[, , 3])
-  all_bands <-
-        stack(jpg.1, jpg.2, jpg.3)
+  # jpg.3 <-         raster(vis_jpg[, , 3])  + 10 / 256
+  # all_bands <-
+  #       stack(jpg.1, jpg.2, jpg.3)
 
 
   # nir_tiff  <-
@@ -26,7 +27,8 @@ raster.jpg.ccspectral <- function(img.photo,
     mask_tiff  <-
       suppressWarnings(tiff::readTIFF(paste("./mask/", mask.photo, sep = "")))
     # transform 0 to 1 from binary tif obtained from image J
-    binar_mask   <- raster(mask_tiff)==0
+    binar_mask   <-
+      raster(mask_tiff)==0
   }
 
   asp <- nrow(jpg.1) / ncol(jpg.1)
@@ -36,7 +38,7 @@ raster.jpg.ccspectral <- function(img.photo,
           stack(jpg.1, jpg.2, jpg.3)
 
     names(all_bands) <-
-      c("vis.orange", "vis.cyan", "nir", "binar.mask")
+      c("vis.orange", "vis.cyan", "nir.blue", "binar.mask")
   }else{
     all_bands <-
       # stack(vis_red, vis_green, vis_blue, nir_blue)

@@ -101,7 +101,8 @@ index.calc.fun <-
 
     # Simple Ratio (SR) ----------------------------------------------------------
     if (any(unique(grepl("SR", index.))) == TRUE) {
-      SR <- raster.mat[[4]] / raster.mat[[1]]
+      # SR <- raster.mat[[4]] / raster.mat[[1]]
+      SR <- raster.mat[[3]] / raster.mat[[1]]
     } else{
       SR <- NULL
     }

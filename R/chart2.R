@@ -82,7 +82,7 @@ chart2 <- function(pic.path,
     # chart.coords <- data.frame(x = numeric(), y = numeric())
 
     message(
-      "Color chart has 6 columns and 4 rows. Bottom row correspond to grayscale tiles. Click on all 24 color chart cells in sequence. The sequence follows left to right following loand starts at cell 1 (brown, top left) and finishes on cell 24 (black, bottom right)."
+      "Color chart has 6 columns and 4 rows. Bottom row correspond to grayscale tiles. Click on all 24 color chart cells in sequence. The sequence follows left to right as follows: starts at cell 1 (brown, top left) and finishes on cell 24 (black, bottom right)."
     )
 
     # for (i in 1:24) {
