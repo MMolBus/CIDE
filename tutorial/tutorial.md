@@ -16,41 +16,34 @@ This document is a tutorial to show how to use the package.
 
 ## Set working directory structure
 
-First of all we need a working directory structure as shown in (**Figure
-[1](#figura1)**).
+First of all we need a working directory structure as shown in **Figure[1](#figura1)**.
 
 -   JPG folder: in our case with Orange + Cyan + NIR in JPG format
-    (**Figure @ref(fig:OCN-example)**).
+    (**Figure[2](#figura2)**).
 
 -   rois folder: contains binary masks with .tif rasters obtained with
     ImageJ. This mask allow us to obtain the area of interest from JPG
     pictures pictures were we want to calculate NDVI. Observe that each
     tif need to be in a subfolder. Mask file and subfolder need to have
-    the same name as sample file (**Figure @ref(fig:mask-example)**.)
+    the same name as sample file (**Figure[3](#figura3)**).
 
 <a name="figure1"></a>
 ![Working directory structure.](working_directory_structure.png "Working directory structure.")
-[Working directory structure.]
+Figure 1: *Working directory structure*.
 
 </div>
 
-<div class="figure">
-
-<img src="OCN-example.jpg" alt="_Orange + Cyan + NIR image example. We need to incluide a color chart that we will use to calibrate color levels._" width="960" />
-<p class="caption">
-*Orange + Cyan + NIR image example. We need to incluide a color chart
-that we will use to calibrate color levels.*
-</p>
+<a name="figure2"></a>
+![Orange + Cyan + NIR image example.](OCN-example.jpg "Orange + Cyan + NIR image example.")
+Figure 2: *Orange + Cyan + NIR image example. We need to incluide a color chart
+that we will use to calibrate color levels*.
 
 </div>
 
-<div class="figure">
-
-<img src="mask-example.jpg" alt="_Mask example obtained from imageJ. White area delimitates the area where we want to calculate NDVI._" width="960" />
-<p class="caption">
-*Mask example obtained from imageJ. White area delimitates the area
-where we want to calculate NDVI.*
-</p>
+<a name="figure3"></a>
+![Mask example.](mask-example.jpg "Mask example.")
+Figure 3: *Mask example obtained from imageJ. White area delimitates the area
+where we want to calculate NDVI*.
 
 </div>
 
@@ -110,7 +103,7 @@ roi_wd <-
 ## Set color chart tile positions
 
 Use **chart2** function to set color tiles positions. Click over the
-sample image folowing the order shown in (**Figure @ref(fig:chart)**)
+sample image folowing the order shown in (**Figure[4](#figura4)**)
 you only need to run one time by image series
 
 ``` r
@@ -119,11 +112,8 @@ chart <- chart2(pic.path= pic_wd,
                 pic.format = "jpg")
 ```
 
-<div class="figure">
-
-<img src="chart.jpg" alt="_Color tile clicking order when using *chart2* function._" width="960" />
-<p class="caption">
-*Color tile clicking order when using *chart2* function.*
-</p>
+<a name="figure4"></a>
+![chart](chart.jpg "chart.")
+Figure 4: *Color tile clicking order when using **chart2** function*.
 
 </div>
