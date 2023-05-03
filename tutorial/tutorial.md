@@ -17,7 +17,7 @@ This document is a tutorial to show how to use the package.
 ## Set working directory structure
 
 First of all we need a working directory structure as shown in (**Figure
-@ref(fig:WD-structure)**).
+[1](#figura1)**).
 
 -   JPG folder: in our case with Orange + Cyan + NIR in JPG format
     (**Figure @ref(fig:OCN-example)**).
@@ -28,12 +28,9 @@ First of all we need a working directory structure as shown in (**Figure
     tif need to be in a subfolder. Mask file and subfolder need to have
     the same name as sample file (**Figure @ref(fig:mask-example)**.)
 
-<div class="figure">
-
-<img src="working_directory_structure.png" alt="_Working directory structure._" width="1184" />
-<p class="caption">
-*Working directory structure.*
-</p>
+<a name="figure1"></a>
+![Working directory structure.](working_directory_structure.png "Working directory structure.")
+[Working directory structure.]
 
 </div>
 
