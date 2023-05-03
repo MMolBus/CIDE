@@ -15,7 +15,7 @@ packageVersion("devtools")
 # 2.3 Toy package: trypackage---------------------------------------------------
 # Call create_package() to initialize a new package in a directory on your
 # computer.
-create_package("D:/Users/Usuario/Documents/GitHub/Trypckg")
+create_package("D:/Users/Usuario/Documents/GitHub/CIDE")
 
 # introduce your functions in R folder
 
