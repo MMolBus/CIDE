@@ -55,7 +55,7 @@ if(require(librarian)==F){
 }
 ```
 
-```{r install packages, echo= T, results = 'hide'}
+```{r install our packages, echo= T, results = 'hide'}
 # install required packages an libraries
 librarian::shelf(MMolbus/CIDE, MMolbus/MButils )
 ```
@@ -104,18 +104,25 @@ roi_wd <-
 
 ```
 
+## Set color chart tile positions
+Use _*chart2*_ function to set color tiles positions. Click over the sample image folowing the order shown in (_*Figure \@ref(fig:chart)*_) 
+you only need to run one time by image series
+
+```{r chart not eval, eval= FALSE}
+## get chart tiles positions using chart2 function--------------------------------
+chart <- chart2(pic.path= pic_wd,
+                pic.format = "jpg")
 
 
+```
+```{r chart  eval, echo=FALSE}
+## get chart tiles positions using chart2 function--------------------------------
+chart <- readRDS("chart.rds")
 
-```{r cars}
-summary(cars)
+
 ```
 
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r chart, echo=FALSE, fig.cap = "_Color tile clicking order when using *chart2* function._"}
+knitr::include_graphics("chart.jpg")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

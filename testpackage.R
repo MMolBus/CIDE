@@ -8,7 +8,7 @@
 
 install.packages("librarian")
 library(librarian)
-librarian::shelf("devtools", "roxygen2", "testthat", "knitr")
+librarian::shelf("devtools", "roxygen2", "testthat", "knitr", "bookdown")
 # install devtools--------------------------------------------------------------
 library(devtools)
 packageVersion("devtools")
@@ -26,6 +26,18 @@ install.packages("usethis")
 library(usethis)
 use_git()
 
+# set dependencies to import ---------------------------------------------------
+
+usethis::use_package("raster")
+usethis::use_package("dplyr")
+usethis::use_package("stringr")
+usethis::use_package("jpeg")
+usethis::use_package("tiff")
+usethis::use_package("OpenImageR")
+usethis::use_package("gatepoints")
+usethis::use_package("rgeos") # Default is "Imports"
+
+                     MMolbus/MButils
 # 2.6 Write the first function in a differnt .R file and save it in R folder----
 # In our case we create strsplit1()
 
@@ -41,6 +53,8 @@ use_r("strsplit1")
 # devtools offers a more robust approach.
 # Call load_all() to make strsplit1() available for experimentation.
 devtools::load_all()
+
+
 
 # Now call strsplit1(x) to see how it works.
 
