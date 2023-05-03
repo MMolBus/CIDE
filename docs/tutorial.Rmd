@@ -1,16 +1,9 @@
 ---
 title: 'Tutorial: CIDE protocol to measure plant area and NDVI values.'
-author: "Mauel Molina-Bustamnte"
+author: "Manuel Molina-Bustamante"
 date: "3/5/2023"
-output:
-  bookdown::html_document2: default
-
+output: html_document
 ---
-
-<!-- ```{r setup, include=FALSE} -->
-<!-- knitr::opts_chunk$set(echo = TRUE) -->
-<!-- ``` -->
-
 # Introduction
 
 This is a package simplification from [PhotomossR](https://github.com/MMolBus/PhotomossR). 
