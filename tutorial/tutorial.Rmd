@@ -104,20 +104,64 @@ Use _*chart2*_ function to set color tiles positions. Click over the sample imag
 you only need to run one time by image series
 
 ```{r chart not eval, eval= FALSE}
-## get chart tiles positions using chart2 function--------------------------------
+## get chart tiles positions using chart2 function.
 chart <- chart2(pic.path= pic_wd,
                 pic.format = "jpg")
 
 
 ```
 ```{r chart  eval, echo=FALSE}
-## get chart tiles positions using chart2 function--------------------------------
+## get chart tiles positions using chart2 function.
 chart <- readRDS("chart.rds")
-
-
 ```
 
 ```{r chart, echo=FALSE, fig.cap = "_Color tile clicking order when using *chart2* function._"}
 knitr::include_graphics("chart.jpg")
 ```
+
+Save color chart polygon position in rds format in results folder. If folder do not exists, create it 
+```{r create results folder}
+# create results folder
+if(dir.exists("results")==F){
+  dir.create("results")
+}
+  
+```
+
+```{r save chart}
+# save chart as rds file
+saveRDS(chart, "./results/chart.rds")
+
+```
+
+
+##get roi mask files
+
+Mask files delimitate the observation area where we want to calculate the NDVI.
+```{r}
+msk_name <- list.files(path = roi_wd, pattern=".tif$",full.names = T, recursive = T)
+
+```
+
+
+##import masks rasters as list
+```{r}
+msk_list <-
+lapply(seq_along(msk_name), function(i)
+  tif2raster(msk_name[i]))
+
+```
+
+
+##trasnform msk to polygon
+```{r}
+obs.areas <- msk_list
+
+```
+
+
+# obs.areas <- roi2polygon.2(roi.paths = obs.areas, tif.path = tif.path)
+
+
+
 

@@ -8,7 +8,12 @@
 
 install.packages("librarian")
 library(librarian)
-librarian::shelf("devtools", "roxygen2", "testthat", "knitr", "bookdown")
+librarian::shelf("devtools",
+                 "roxygen2",
+                 "testthat",
+                 "knitr",
+                 "bookdown",
+                 "MMolbus/MButils")
 # install devtools--------------------------------------------------------------
 library(devtools)
 packageVersion("devtools")
@@ -37,7 +42,7 @@ usethis::use_package("OpenImageR")
 usethis::use_package("gatepoints")
 usethis::use_package("rgeos") # Default is "Imports"
 
-                     MMolbus/MButils
+                     # MMolbus/MButils
 # 2.6 Write the first function in a differnt .R file and save it in R folder----
 # In our case we create strsplit1()
 
