@@ -5,27 +5,19 @@ Manuel Molina-Bustamante
 
 # Introduction
 
-This is a package simplification from
-[PhotomossR](https://github.com/MMolBus/PhotomossR). This set of R
-functions enables to measure plant area and estimates photosynthetic
-activity using the NDVI.
+This is a simplified package derived from [PhotomossR](https://github.com/MMolBus/PhotomossR). This collection of R functions enables the measurement of plant area and the estimation of photosynthetic activity using NDVI.
 
-This document is a tutorial to show how to use the package.
+This document is a tutorial designed to demonstrate how to use the package.
 
 # Tutorial
 
 ## Set working directory structure
 
-First of all we need a working directory structure as shown in **Figure[1](#figura1)**.
+First of all, we need a working directory structure as shown in **Figure 1** (referenced as **[\#figura1](#figura1)**).
 
--   JPG folder: in our case with Orange + Cyan + NIR in JPG format
-    (**Figure[2](#figura2)**).
+- JPG folder: contains Orange + Cyan + NIR channels in JPG format (referenced as **Figure 2** **[\#figura2](#figura2)**).
 
--   rois folder: contains binary masks with .tif rasters obtained with
-    ImageJ. This mask allow us to obtain the area of interest from JPG
-    pictures pictures were we want to calculate NDVI. Observe that each
-    tif need to be in a subfolder. Mask file and subfolder need to have
-    the same name as sample file (**Figure[3](#figura3)**).
+- rois folder: contains binary masks with .tif rasters obtained with ImageJ. These masks allow us to obtain the area of interest from JPG pictures where we want to calculate NDVI. Note that each tif file needs to be in a subfolder. The mask file and subfolder should have the same name as the sample file (**Figure 3** **[\#figura3](#figura3)**).
 
 <a name="figure1"></a>
 ![Working directory structure.](working_directory_structure.png "Working directory structure.")
@@ -78,7 +70,7 @@ librarian::shelf(MMolbus/CIDE, MMolbus/MButils )
 
 ## Set working directory
 
-Set working directory and define picture and roi folders
+Set working directory and define picture and roi (mask) folders
 
 ``` r
 # define your working directory
@@ -102,9 +94,7 @@ roi_wd <-
 
 ## Set color chart tile positions
 
-Use **chart2** function to set color tiles positions. Click over the
-sample image folowing the order shown in (**Figure[4](#figura4)**)
-you only need to run one time by image series
+Use the **chart2** function to set the positions of the color tiles. Click on the sample image, following the order shown in **Figure 4** (referenced as **[\#figura4](#figura4)**). You only need to run this once per image series.
 
 ``` r
 ## get chart tiles positions using chart2 function--------------------------------
