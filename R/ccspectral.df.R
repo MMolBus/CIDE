@@ -62,6 +62,7 @@ ccspectral.df <- function(tif.path,
                           index. = c("NDVI"),
                           threshold.method = NULL,
                           threshold.vector = NULL,
+
                           descriptors. =
                             c("median","mean","sd","min",
                               "max","diff.range")
@@ -137,9 +138,10 @@ ccspectral.df <- function(tif.path,
 
     # Create exportation folder =============================================================================
 
-    out_dir <- paste0("output ",Sys.time(), " ", threshold.method)
+    out_dir <- paste0("./results/", "output ",Sys.time(), " ", threshold.method)
     out_dir <- gsub(":", ".", out_dir)
     dir.create(out_dir)
+
     # Prepare dataframe for exportation results and write empty csv =============================================
 
   # Create empty data.frame -----------------------------
@@ -468,9 +470,12 @@ ccspectral.df <- function(tif.path,
       threshold.method = threshold.method,
       threshold.vector = threshold.vector,
       pdf = pdf,
+      out.dir=out_dir,
+
       start.time=start_time
       )
   })
   message("Processed files may be found at: ", paste0(tif.path, out_dir))
 }
+
 
