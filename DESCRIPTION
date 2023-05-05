@@ -21,5 +21,6 @@ Imports:
     tiff,
     OpenImageR,
     gatepoints,
-    rgeos
+    rgeos,
+    plyr
 Depends: R (>= 2.10)
