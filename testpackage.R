@@ -32,6 +32,9 @@ library(usethis)
 use_git()
 
 # set dependencies to import ---------------------------------------------------
+gitwd <- getpath()
+setwd(gitwd)
+
 
 usethis::use_package("raster")
 usethis::use_package("dplyr")
@@ -40,6 +43,8 @@ usethis::use_package("jpeg")
 usethis::use_package("tiff")
 usethis::use_package("OpenImageR")
 usethis::use_package("gatepoints")
+usethis::use_package("plyr")
+usethis::use_package("tiff")
 usethis::use_package("rgeos") # Default is "Imports"
 
                      # MMolbus/MButils
@@ -57,6 +62,7 @@ use_r("strsplit1")
 # Or maybe we’d call source("R/strsplit1.R"). For package development, however,
 # devtools offers a more robust approach.
 # Call load_all() to make strsplit1() available for experimentation.
+setwd(gitwd)
 devtools::load_all()
 
 
