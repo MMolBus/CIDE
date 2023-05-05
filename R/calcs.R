@@ -11,6 +11,7 @@
 # threshold.method = threshold.method
 # area <- 1
 # photo <- 1
+# out.dir <- out_dir
 
 calcs <-
   function(photo,
@@ -30,6 +31,8 @@ calcs <-
            descrip,
            threshold.method,
            pdf,
+           # raster.write,
+           out.dir,
            start.time){
     # Prepare data
     obs_area   <- obs.areas[[area]]
@@ -128,37 +131,26 @@ calcs <-
                      # save list threshold results
                      # print("saving threshold rasters")
                      # lapply(seq_along(list_threshold_results[[1]]), function(i)
-                     #   writeRaster(list_threshold_results[[1]][[i]],
+                     #   raster::writeRaster(list_threshold_results[[1]][[i]],
                      #               paste(index.[i],threshold.method,
                      #                     paste0(sample_name,".tif"),
                      #                     sep="_"),
                      #                     overwrite=T))
 
-    setwd(out_dir)
+    # setwd(out.dir)
 
-                     if (dir.exists("raster_results") == F) {
-                       new_dir <- "raster_results"
-                       dir.create(new_dir)
+                     if (dir.exists(file.path( out.dir, "raster_results")) == F) {
+                       dir.create(file.path( out.dir, "raster_results"))
                      }
                      print("saving threshold rasters")
 
                      if (calculate.thresh == F) {
                        for (i in seq_along(list_threshold_results[[1]])) {
-                         # lapply(seq_along(list_threshold_results[[1]]), function(i)
-                         writeRaster(list_threshold_results[[1]][[i]],
-                                     file.path(
-                                       new_dir,
-                                       paste(
-                                         index.[i],
-                                         threshold.method,
-                                         threshold.vector[i],
-                                         paste0(sample_name, ".tif"),
-                                         sep = "_"
-                                       )
-                                     ),
-                                     overwrite = T)
+
+
+
                          raster_export <-
-                           stack(calibration_results[[1]],
+                           raster::stack(calibration_results[[1]],
                                  list_raster_results[[i]],
                                  list_threshold_results[[1]][[i]])
                          names(raster_export) <-
@@ -166,7 +158,10 @@ calcs <-
 
                          saveRDS(raster_export,
                                  file.path(
-                                   new_dir,
+                                   # paste0(out.dir,
+                                   file.path(out.dir,
+                                   "/raster_results"
+                                          ),
                                    paste(
                                      "raster",
                                      index.[i],
@@ -177,10 +172,13 @@ calcs <-
                                    )
                                  ))
 
+
+
+
                        }
                      }
 
-                     setwd("..")
+                     # setwd("..")
 
                      # Extract mask values -----------------------------------------------------
                      #extract mask pixel coordinates
@@ -527,7 +525,7 @@ calcs <-
                      # Create pdf to plot results ---------------------------------------------
                      if (pdf == T) {
                        # Set plotpdf function to plot results (operated by lists) ---------------------------------
-                       pdf_name <- paste0(out_dir, "/", sample_name, ".pdf")
+                       pdf_name <- paste0(out.dir, "/", sample_name, ".pdf")
 
                        plotpdf <-
                          function(lhist,
