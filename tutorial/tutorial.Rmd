@@ -36,6 +36,9 @@ knitr::include_graphics("OCN-example.jpg")
 ```{r mask-example, echo=FALSE, fig.cap = "_Mask example obtained from imageJ. White area delimitates the area where we want to calculate NDVI._"}
 knitr::include_graphics("mask-example.jpg")
 ```
+##RECOMENDATION
+
+Because may be we will want to make some adjustments to the calculated NDVI. Only put one sample in the mandatory folders the first time you run this code.
 
 ## Install required packages
 We install CIDE package.
@@ -100,7 +103,7 @@ roi_wd <-
 ```
 
 ## Set color chart tile positions
-Use _*chart2*_ function to set color tiles positions. Click over the sample image folowing the order shown in (_*Figure \@ref(fig:chart)*_) 
+Use _*chart2*_ function to set color tiles positions. Click over the sample image folowing the order shown in _*Figure \@ref(fig:chart)*_ 
 you only need to run one time by image series
 
 ```{r chart not eval, eval= FALSE}
@@ -135,32 +138,65 @@ saveRDS(chart, "./results/chart.rds")
 ```
 
 
-##get roi mask files
+##Import mask files with the region of interest
 
-Mask files delimitate the observation area where we want to calculate the NDVI.
+Mask raster files  delimitates the observation area where we want to calculate the NDVI.
 ```{r}
-msk_name <- list.files(path = roi_wd, pattern=".tif$",full.names = T, recursive = T)
+# get mask filenames
+msk_name <-
+  list.files(
+    path = roi_wd,
+    pattern = ".tif$",
+    full.names = T,
+    recursive = T
+  )
+
+# Import masks rasters as list
+obs.areas <-
+  lapply(seq_along(msk_name), function(i)
+    tif2raster(msk_name[i]))
+               
+```
+
+##Now make the calculations.
+We are ready to try with one sample image to see if the NDVI calculation is correct.
+Put one sample image and its respective mask following the configuration of 
+```{r test with one sample, eval = F}
+ccspectral.df(tif.path = wd,
+              chart,
+              obs.areas,
+              pdf = F,
+              calculate.thresh = F,
+              descrip = T,
+              manual.mask.test = F,
+              index. = c("NDVI"),
+              threshold.method = NULL,
+              threshold.vector = 0.4,
+              descriptors. =
+                c("median","mean","sd","min",
+                  "max","diff.range" )
+)
 
 ```
 
+# Results evaluation and corrections
 
-##import masks rasters as list
-```{r}
-msk_list <-
-lapply(seq_along(msk_name), function(i)
-  tif2raster(msk_name[i]))
+Now that we have the first NDVI calculated we make a first evaluation of data results. 
 
+Ussually NDVI values between 0.2 and 0.4 correspond to areas with scarce vegetation; moderate vegetation tends to vary between 0.4 and 0.6; while any value above 0.6 indicates the highest possible density of green leaves.
+
+Values below 0.2 are supposed to be soil or dead material.
+
+In our case we have a absolute erroneous NDVI value, but with a correct correspondence between soil and plant areas. Is seems that NDVI has draged to negative nonsense values _*Figure \@ref(fig:NDVI_error)*_ 
+
+```{r NDVI_error, echo=FALSE, fig.cap = "_First NDVI obtained with nonsense negative values._"}
+
+knitr::include_graphics("NDVI_error.png")
 ```
 
 
-##trasnform msk to polygon
-```{r}
-obs.areas <- msk_list
-
-```
-
-
-# obs.areas <- roi2polygon.2(roi.paths = obs.areas, tif.path = tif.path)
+To fix this error we will take as reference the bare soil from the image
+<!-- # obs.areas <- roi2polygon.2(roi.paths = obs.areas, tif.path = tif.path) -->
 
 
 
