@@ -1,5 +1,5 @@
 # pic.path = list.files(pic_wd, full.names = T)[1]
-# samp.width = 0.005
+# samp.width = 0.05
 # pic.format = "jpg"
 # roi.area = obs.areas[[1]]
 # sample.points = 25
@@ -69,8 +69,7 @@ sample.soil.points <-
 
       X11()
       raster::plotRGB(obs.raster,
-                      scale = 1,
-                      asp = nrow(pic.1) / ncol(pic.1))
+                      scale = 1)
 
       options(warn = 0)
 
@@ -89,12 +88,18 @@ sample.soil.points <-
 
       sp.chart <- sp::SpatialPoints(chart.coords)
 
+     options(warn = 0)
       chart_buff <-
         rgeos::gBuffer(sp.chart, width = samp.width, byid = T)
 
-      # plot(chart_buff, add = T, col = "green")
 
-      return(chart_buff)
+
+
+    # plot(chart_buff, add = T, col = "green")
+    #   # dev.off()
+
+
+    return(chart_buff)
     }
 
     sample_soil_points <- chartf(
@@ -105,9 +110,11 @@ sample.soil.points <-
       sample.points
     )
 
-    plot(sample_soil_points, add = T, col = "green")
+    sp::plot(sample_soil_points, add = T, col = "green")
+      # dev.off()
 
     return(sample_soil_points)
+
 
   }
 
