@@ -1,3 +1,9 @@
+# pic.path = list.files(pic_wd, full.names = T)[1]
+# samp.width = 0.005
+# pic.format = "jpg"
+# roi.area = obs.areas[[1]]
+# sample.points = 25
+
 sample.soil.points <-
   function(pic.path,
            samp.width = 0.01,
@@ -47,7 +53,7 @@ sample.soil.points <-
                                   pic.2,
                                   pic.3)
       obs.raster <-
-        crop_mask(ras = all.bands, msk = obs.area)
+        crop_mask(ras = pic.raster, msk = roi.area)
       extent(obs.raster) <- extent(c(0, 1, 0, 1))
 
       options(warn = -1)
