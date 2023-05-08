@@ -62,7 +62,8 @@ ccspectral.df <- function(tif.path,
                           index. = c("NDVI"),
                           threshold.method = NULL,
                           threshold.vector = NULL,
-
+                          index.correction = F,
+                          index.correction.value,
                           descriptors. =
                             c("median","mean","sd","min",
                               "max","diff.range")
@@ -471,7 +472,8 @@ ccspectral.df <- function(tif.path,
       threshold.vector = threshold.vector,
       pdf = pdf,
       out.dir=out_dir,
-
+      index.correction = index.correction,
+      index.correction.value,
       start.time=start_time
       )
   })

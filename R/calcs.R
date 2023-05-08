@@ -31,6 +31,8 @@ calcs <-
            descrip,
            threshold.method,
            pdf,
+           index.correction = F,
+           index.correction.value,
            # raster.write,
            out.dir,
            start.time){
@@ -117,7 +119,20 @@ calcs <-
                      # threshold.method = threshold.method,
                      # pdf = pdf))
 
+    # correct index if required
+    if (index.correction == T) {
+      for (k in seq_along(list_raster_results)) {
+        list_raster_results[[k]] <-
+          list_raster_results[[k]] + index.correction.value[k]
+
+      }
+    }
                      # Calculate thershold results
+
+
+
+
+
     list_threshold_results <-
       calculate.raster.thresh.fun(
         list.raster.results = list_raster_results,
