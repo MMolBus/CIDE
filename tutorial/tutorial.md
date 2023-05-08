@@ -57,6 +57,12 @@ where we want to calculate NDVI.*
 
 </div>
 
+\##RECOMENDATION
+
+Because may be we will want to make some adjustments to the calculated
+NDVI. Only put one sample in the mandatory folders the first time you
+run this code.
+
 ## Install required packages
 
 We install CIDE package.
@@ -113,8 +119,8 @@ roi_wd <-
 ## Set color chart tile positions
 
 Use **chart2** function to set color tiles positions. Click over the
-sample image folowing the order shown in (**Figure @ref(fig:chart)**)
-you only need to run one time by image series
+sample image folowing the order shown in **Figure @ref(fig:chart)** you
+only need to run one time by image series
 
 ``` r
 ## get chart tiles positions using chart2 function.
@@ -165,6 +171,139 @@ msk_name <-
 obs.areas <-
   lapply(seq_along(msk_name), function(i)
     tif2raster(msk_name[i]))
+```
+
+\##Now make the calculations. We are ready to try with one sample image
+to see if the NDVI calculation is correct. Put one sample image and its
+respective mask following the configuration of
+
+``` r
+ccspectral.df(tif.path = wd,
+              chart,
+              obs.areas,
+              pdf = F,
+              calculate.thresh = F,
+              descrip = T,
+              manual.mask.test = F,
+              index. = c("NDVI"),
+              threshold.method = NULL,
+              threshold.vector = 0.4,
+              descriptors. =
+                c("median","mean","sd","min",
+                  "max","diff.range" )
+)
+```
+
+# Results evaluation and corrections
+
+Now that we have the first NDVI calculated we make a first evaluation of
+data results.
+
+Usually NDVI values between 0.2 and 0.4 correspond to areas with scarce
+vegetation; moderate vegetation tends to vary between 0.4 and 0.6; while
+any value above 0.6 indicates the highest possible density of green
+leaves.
+
+Values below 0.2 are supposed to be soil or dead material.
+
+In our case we have a absolute NDVI value that not fit with logic
+expected values, meanwhile reelative values seems to have sense between
+soil and plant areas. Is seems that NDVI has draged to negative nonsense
+values **Figure @ref(fig:NDVI_error)**
+
+<div class="figure">
+
+<img src="NDVI_error.png" alt="_First NDVI obtained with nonsense negative values._" width="1000" />
+<p class="caption">
+*First NDVI obtained with nonsense negative values.*
+</p>
+
+</div>
+
+To fix this error we will take as reference the bare soil from the
+image. To do that we use the *sample.soil.points* function. This
+function asks you to mark the points in the photograph where you can
+find ground. The argument ‘sample.points’ allows you to set the number
+of points you want to take as a sample, and the argument ‘samp.width’
+allows you to determine the width of the sample, which determines the
+number of pixels that will be taken in each sample. @ref(fig:sample soil
+plot)
+
+``` r
+# run sample.soil.points
+sample_points <-
+  sample.soil.points(
+    pic.path = list.files(pic_wd, full.names = T)[1],
+    samp.width = 0.005,
+    pic.format = "jpg",
+    roi.area = obs.areas[[1]],
+    sample.points = 25
+  )
+```
+
+<div class="figure">
+
+<img src="soil_samples.png" alt="_Example points over the image to find soil locations._" width="664" />
+<p class="caption">
+*Example points over the image to find soil locations.*
+</p>
+
+</div>
+
+Select the maximum value from our calculated ndvi values (We use the
+first calculated ndvi).
+
+``` r
+# read raster result saved in .rds value in the results folder   
+r <- readRDS("./results/output YYYY-MM-DD manual/raster_results/sample1.rds")
+```
+
+``` r
+# extract ndvi values from soil locations
+soil_values <- numeric()
+i <- 1
+for (i in seq_along(sample_points)) {
+  poly <- sample_points[i]
+  df_samp <- data.frame(extract(r[["NDVI"]],
+                                poly))
+  options(warn = 0)
+  # if (nrow(df_samp) >= 50) {
+  #     df_samp <- df_samp[sample(x = 1:nrow(df_samp), size = 50,
+  #                               replace = F), ]
+  soil_values <- rbind(soil_values, df_samp[1, ])
+  rm(df_samp, poly)
+}
+ 
+# And get the correction that we need to apply to the calculated ndvi.
+# In our case we expect a maximum soil ndvi  of 0.2  
+
+ndvi_correction <- 0.2-max(soil_values)
+# [1] 0.3027424
+
+# we need to sum 0.3027424 to the calculated ndvi
+```
+
+Now we recalculate ndvi adding the ndvi_correction, we use the arguments
+index.correction and index.correction.value.
+
+``` r
+# we recalculate ndvi values
+ccspectral.df(tif.path = wd,
+              chart,
+              obs.areas,
+              pdf = F,
+              calculate.thresh = F,
+              descrip = T,
+              manual.mask.test = F,
+              index. = c("NDVI"),
+              threshold.method = NULL,
+              threshold.vector = 0.4,
+              index.correction = T,
+              index.correction.value = ndvi_correction,
+              descriptors. =
+                c("median","mean","sd","min",
+                  "max","diff.range" )
+)
 ```
 
 <!-- # obs.areas <- roi2polygon.2(roi.paths = obs.areas, tif.path = tif.path) -->

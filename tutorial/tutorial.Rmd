@@ -183,11 +183,11 @@ ccspectral.df(tif.path = wd,
 
 Now that we have the first NDVI calculated we make a first evaluation of data results. 
 
-Ussually NDVI values between 0.2 and 0.4 correspond to areas with scarce vegetation; moderate vegetation tends to vary between 0.4 and 0.6; while any value above 0.6 indicates the highest possible density of green leaves.
+Usually NDVI values between 0.2 and 0.4 correspond to areas with scarce vegetation; moderate vegetation tends to vary between 0.4 and 0.6; while any value above 0.6 indicates the highest possible density of green leaves.
 
 Values below 0.2 are supposed to be soil or dead material.
 
-In our case we have a absolute erroneous NDVI value, but with a correct correspondence between soil and plant areas. Is seems that NDVI has draged to negative nonsense values _*Figure \@ref(fig:NDVI_error)*_ 
+In our case we have a absolute NDVI value that not fit with logic expected values, meanwhile reelative values seems to have sense between  soil and plant areas. Is seems that NDVI has draged to negative nonsense values _*Figure \@ref(fig:NDVI_error)*_ 
 
 ```{r NDVI_error, echo=FALSE, fig.cap = "_First NDVI obtained with nonsense negative values._"}
 
@@ -195,7 +195,98 @@ knitr::include_graphics("NDVI_error.png")
 ```
 
 
-To fix this error we will take as reference the bare soil from the image
+To fix this error we will take as reference the bare soil from the image. To do that we use the _sample.soil.points_ function. 
+This function asks you to mark the points in the photograph where you can find ground. The argument 'sample.points' allows you to set the number of points you want to take as a sample, and the argument 'samp.width' allows you to determine the width of the sample, which determines the number of pixels that will be taken in each sample. \@ref(fig:sample soil plot)
+
+
+```{r sample.soil.points, eval=FALSE}
+# run sample.soil.points
+sample_points <-
+  sample.soil.points(
+    pic.path = list.files(pic_wd, full.names = T)[1],
+    samp.width = 0.005,
+    pic.format = "jpg",
+    roi.area = obs.areas[[1]],
+    sample.points = 25
+  )
+
+```
+
+
+```{r sample soil plot, echo=FALSE, fig.cap="_Example points over the image to find soil locations._"}
+knitr::include_graphics("soil_samples.png")
+
+```
+
+
+Select the maximum value from our calculated ndvi values (We use the first calculated ndvi).
+
+
+```{r read first result not run, echo=T, eval=F}
+# read raster result saved in .rds value in the results folder   
+r <- readRDS("./results/output YYYY-MM-DD manual/raster_results/sample1.rds")
+```
+
+```{r read first result, echo=F, eval=F}
+# read raster result saved in .rds value in the results folder   
+r <- readRDS("./tutorial/results/output_example/raster_results/sample_raster_output.rds")
+```
+
+```{r extract ndvi soil values, echo=TRUE, eval=F}
+# extract ndvi values from soil locations
+soil_values <- numeric()
+i <- 1
+for (i in seq_along(sample_points)) {
+  poly <- sample_points[i]
+  df_samp <- data.frame(extract(r[["NDVI"]],
+                                poly))
+  options(warn = 0)
+  # if (nrow(df_samp) >= 50) {
+  #     df_samp <- df_samp[sample(x = 1:nrow(df_samp), size = 50,
+  #                               replace = F), ]
+  soil_values <- rbind(soil_values, df_samp[1, ])
+  rm(df_samp, poly)
+}
+ 
+# And get the correction that we need to apply to the calculated ndvi.
+# In our case we expect a maximum soil ndvi  of 0.2  
+
+ndvi_correction <- 0.2-max(soil_values)
+# [1] 0.3027424
+
+# we need to sum 0.3027424 to the calculated ndvi
+
+
+```
+
+Now we recalculate ndvi adding the ndvi_correction, we use the arguments index.correction and index.correction.value.  
+```{r ndvi recalculation, echo=T, eval = F}
+
+# we recalculate ndvi values
+ccspectral.df(tif.path = wd,
+              chart,
+              obs.areas,
+              pdf = F,
+              calculate.thresh = F,
+              descrip = T,
+              manual.mask.test = F,
+              index. = c("NDVI"),
+              threshold.method = NULL,
+              threshold.vector = 0.4,
+              index.correction = T,
+              index.correction.value = ndvi_correction,
+              descriptors. =
+                c("median","mean","sd","min",
+                  "max","diff.range" )
+)
+
+
+```
+
+
+
+
+
 <!-- # obs.areas <- roi2polygon.2(roi.paths = obs.areas, tif.path = tif.path) -->
 
 
