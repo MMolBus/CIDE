@@ -97,10 +97,10 @@ chart2 <- function(pic.path,
     sp.chart <- sp::SpatialPoints(chart.coords)
 
     chart_buff <-
-      rgeos::gBuffer(sp.chart, width = samp.width, byid = T)
+      terra::buffer(sp.chart, width = samp.width, byid = T)
 
     # plot(chart_buff, add = T, col = "green")
-    plot(chart_buff, add = T, col = "green")
+    sp::plot(chart_buff, add = T, col = "green")
     return(chart_buff)
   # }
   #
